@@ -13,11 +13,13 @@
         <input type="text" name="name" placeholder="Input name">
         <button type="submit">Submit</button>
     </form>
+    <a href="html/postuser.html"><button>New User</button></a>
     <ul>
         <% for(let i = 0; i < allUsers.length; i++) {%>
             <li>
                 <p>
                     <a href="/user/<%= allUsers[i].id%>"><%= allUsers[i].name %></a>
+                    <a href="/edit/<%= allUsers[i].id%>">Edit</a>
                 </p>
             </li>
         <%}%>

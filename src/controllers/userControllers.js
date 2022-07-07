@@ -1,6 +1,7 @@
 const fs = require('fs');
 
 const path = require('path');
+const { all } = require('../routes/users');
 
 const jsonPath = path.join(__dirname,'../database/users.json');
 
@@ -40,8 +41,61 @@ const controller = {
         }else{
             res.send("Not Found");
         }
-    }
+    },
+
+    postUser: (req,res) =>{
+        const newName = req.body.name;
+        const newEmail = req.body.email;
+
+        const id = allUsers[allUsers.length - 1].id;
+        const newId = id + 1;
+
+        const obj = {
+            id: newId,
+            name: newName,
+            email: newEmail,
+        }
+        allUsers.push(obj);
+        
+        fs.writeFile(jsonPath,JSON.stringify(allUsers),(error) => {
+            if(error){
+                res.send(error);
+            }else{
+                res.redirect('/users');
+            }
+        })
+        //res.send(allUsers);
+    },
+
+    edit: (req,res)=>{
+        const id = req.params.id;
+        const userEdit=allUsers.find((element) => element.id === parseInt(id));
+        res.render(path.join(__dirname,'../views/useredit'),{'userEdit':userEdit});
+    },
     
+    editConfirm: (req,res) => {
+        const newId = req.body.id;
+        const newName = req.body.name;
+        const newEmail = req.body.email;
+
+        allUsers.forEach((element) => {
+            if(element.id === parseInt(newId)){
+                element.id = parseInt(newId);
+                element.name = newName;
+                element.email = newEmail;
+            }
+        });
+
+        
+
+        fs.writeFile(jsonPath,JSON.stringify(allUsers),(error) => {
+            if(error){
+                res.send(error);
+            }else{
+                res.redirect('/users');
+            }
+        })       
+    }
 };
 
 
