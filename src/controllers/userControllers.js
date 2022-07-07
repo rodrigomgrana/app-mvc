@@ -23,14 +23,24 @@ const controller = {
 
     getUserId: (req,res) => {
         const id = req.params.id;
-        const user = users.find((element) => element.id == parseInt(id));
+        const user = allUsers.find((element) => element.id == parseInt(id));
         if(user){
-            res.send(user);
+            //res.send(user);
+            res.render(path.join(__dirname,'../views/userdetail'),{'user':user})
         }else{
             res.send("Not found");
         }
     },
 
+    search: (req, res) => {
+        const name = req.query.name;
+        const user = allUsers.filter((element) => element.name.toUpperCase().includes(name.toUpperCase()));
+        if(user){
+            res.render(path.join(__dirname,'../views/userdetail'),{'user':user})
+        }else{
+            res.send("Not Found");
+        }
+    }
     
 };
 

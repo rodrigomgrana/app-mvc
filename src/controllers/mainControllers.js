@@ -1,5 +1,8 @@
 const path = require('path');
 
+
+
+
 const controller = {
     index: (req,res) => {
         //res.send("<h1>Bienvenidos a la app</h1>");

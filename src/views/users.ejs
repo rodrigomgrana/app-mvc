@@ -8,14 +8,16 @@
 </head>
 <body>
     <h2>List users</h2>
+    <h5>Search</h5>
+    <form action="/search" method="GET">
+        <input type="text" name="name" placeholder="Input name">
+        <button type="submit">Submit</button>
+    </form>
     <ul>
         <% for(let i = 0; i < allUsers.length; i++) {%>
             <li>
                 <p>
-                    <%= allUsers[i].name %>
-                </p>
-                <p>
-                    <%= allUsers[i].email %>
+                    <a href="/user/<%= allUsers[i].id%>"><%= allUsers[i].name %></a>
                 </p>
             </li>
         <%}%>
